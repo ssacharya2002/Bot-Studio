@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String?
+  password   String?
+  avatar     String?
+  active     Boolean? @default(true)
+  subscribed Boolean? @default(false)
+
+  bots      bot[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model bot {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  avatar    String?  @default("https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yb2h2RDhEOXR0TmVyUUV1YmtjMW90WTZ4TUciLCJyaWQiOiJ1c2VyXzJvbmh1OHFDUnZha0lIREw2eGwzeTY3aU5TRyJ9") @db.VarChar(255)
+  pdfUrl    String   @db.VarChar(255)
+  pdfKey    String
+  active    Boolean? @default(false)
+  user      user     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
