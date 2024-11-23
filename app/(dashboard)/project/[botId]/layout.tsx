@@ -1,7 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import prisma from "@/lib/prisma";
-import { RedirectToSignIn } from "@clerk/nextjs";
+// import prisma from "@/lib/prisma";
+// import { RedirectToSignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -11,27 +11,16 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const { userId  } = await auth();
+  const { userId } = await auth();
 
   if (!userId) {
-    return RedirectToSignIn({});
+    redirect("/sign-in");
   }
-
-  const bots = await prisma.bot.findMany({
-    where:{
-        userId
-    }
-  })
-
-  if(!bots){    
-    return redirect("/");
-  }
-
 
   return (
     <div>
       <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar bot={null} />
         <SidebarTrigger />
         {children}
       </SidebarProvider>

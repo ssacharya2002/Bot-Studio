@@ -31,10 +31,10 @@ model bot {
   id        String   @id @default(uuid())
   name      String
   userId    String
-  avatar    String?  @default("https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yb2h2RDhEOXR0TmVyUUV1YmtjMW90WTZ4TUciLCJyaWQiOiJ1c2VyXzJvbmh1OHFDUnZha0lIREw2eGwzeTY3aU5TRyJ9") @db.VarChar(255)
-  pdfUrl    String   @db.VarChar(255)
+  email     String  @default("help@example.com")
+  avatar    String  @default("https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yb2h2RDhEOXR0TmVyUUV1YmtjMW90WTZ4TUciLCJyaWQiOiJ1c2VyXzJvbmh1OHFDUnZha0lIREw2eGwzeTY3aU5TRyJ9") @db.VarChar(255)
   pdfKey    String
-  active    Boolean? @default(false)
+  active    Boolean @default(false)
   user      user     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
