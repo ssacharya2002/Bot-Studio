@@ -30,3 +30,20 @@ export const deleteDocumentsByPdfUuid = async (
 }
 
 
+export async function matchDocumentEmbeddings(queryEmbedding: number[], matchCount: number, filter: string, docUuid: string) {
+  try {
+    const { data, error } = await SupabaseClient.rpc('match_document_embeddings', {
+      query_embedding: queryEmbedding,
+      match_count: matchCount,
+      filter: filter,
+      doc_uuid: docUuid
+    });
+
+    if (error) throw error;
+    if(!data) return []
+    return data;
+  } catch (error) {
+    throw new Error('Failed to match document embeddings');
+  }
+}
+
