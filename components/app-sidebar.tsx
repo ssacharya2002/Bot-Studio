@@ -17,7 +17,7 @@ import {
 import { NavMain } from "@/components/nav-main";
 // import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
+// import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -52,7 +52,28 @@ const data = {
       plan: "Free",
     },
   ],
-  navMain: [
+};
+
+export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  bot: bot | null;
+  user: { name: string | null; email: string| null; avatar: string };
+}
+export function AppSidebar({ user, bot, ...props }: AppSidebarProps) {
+  // const user = useUser().user;
+
+  // if (!user) {
+  //   return null;
+  // }
+
+  const userData = {
+    // name: user.firstName + " " + user.lastName,
+    name: user.name,
+    // email: user.emailAddresses[0].emailAddress,
+    email: user.email,
+    avatar: user.avatar,
+  };
+
+  const navMain = [
     {
       title: "Playground",
       url: "#",
@@ -60,129 +81,73 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Chat",
+          url: `/project/${bot?.id}`,
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Integration",
+          url: `/project/${bot?.id}/integration`,
         },
+
         {
-          title: "Settings",
-          url: "#",
+          title: "Edit",
+          url: `/project/new-or-edit/${bot?.id}`,
         },
       ],
     },
-    // {
-    //   title: "Models",
-    //   url: "#",
-    //   icon: Bot,
-    //   items: [
-    //     {
-    //       title: "Genesis",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Explorer",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Quantum",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
     {
       title: "Documentation",
-      url: "#",
+      url: "project",
       icon: BookOpen,
       items: [
         {
           title: "Introduction",
-          url: "#",
+          url: `/project/${bot?.id}/introduction`,
         },
 
         {
           title: "Get Started",
-          url: "#",
+          url: `/project/${bot?.id}/get-started`,
         },
         {
           title: "Integration",
-          url: "#",
+          url: `/project/${bot?.id}/integration`,
         },
         {
           title: "Tutorials",
-          url: "#",
+          url: `/project/${bot?.id}/tutorials`,
         },
       ],
     },
     {
       title: "Settings",
-      url: "#",
+      url: `#`,
       icon: Settings2,
       items: [
         {
           title: "General",
-          url: "#",
+          url: `/project/${bot?.id}/general`,
         },
-        // {
-        //   title: "Team",
-        //   url: "#",
-        // },
         {
           title: "Billing",
-          url: "#",
+          url: `/project/${bot?.id}/billing`,
         },
         {
           title: "Usage",
-          url: "#",
+          url: `/project/${bot?.id}/usage`,
         },
       ],
     },
-  ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: PieChart,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: Map,
-  //   },
-  // ],
-};
-
-export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  bots: bot[] | null;
-}
-export function AppSidebar({ ...props }: AppSidebarProps) {
-  const user = useUser().user;
-
-  if (!user) {
-    return null;
-  }
-
-  const userData = {
-    name: user.firstName + " " + user.lastName,
-    email: user.emailAddresses[0].emailAddress,
-    avatar: user.imageUrl,
-  };
-
+  ];
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        {/* <TeamSwitcher teams={data.teams} /> */}
+        <h2 className="text-lg font-semibold  w-full px-5">{bot?.name}</h2>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>

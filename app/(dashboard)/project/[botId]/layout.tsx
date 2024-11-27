@@ -1,9 +1,10 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import Navbar from "@/components/Navbar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import prisma from "@/lib/prisma";
 // import prisma from "@/lib/prisma";
 // import { RedirectToSignIn } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -14,20 +15,25 @@ export default async function Layout({
   children: React.ReactNode;
   params: Promise<{ botId: string }>;
 }) {
-  const { userId } = await auth();
-
-  const botId  = (await params).botId;
-  console.log("botId", botId);
-  
-
-  if (!userId) {
+  // const { userId } = await auth();
+  const user = await currentUser();
+  if (!user) {
     redirect("/sign-in");
   }
+
+  const botId = (await params).botId;
+  console.log("botId", botId);
+
+  if (!user.id) {
+    redirect("/sign-in");
+  }
+
+  // const userid = user.id
 
   const bot = await prisma.bot.findUnique({
     where: {
       id: botId,
-      userId,
+      userId: user.id,
     },
   });
 
@@ -38,9 +44,24 @@ export default async function Layout({
   return (
     <div>
       <SidebarProvider>
-        <AppSidebar bot={bot} />
+        <AppSidebar
+          bot={bot}
+          user={{
+            name: user.fullName,
+            email: user.emailAddresses[0].emailAddress,
+            avatar: user.imageUrl,
+          }}
+        />
         <SidebarTrigger />
-        {children}
+        <div className="flex flex-col w-full">
+          <Navbar
+            user={{
+              image: user.imageUrl,
+              name: user?.fullName || "",
+            }}
+          />
+          {children}
+        </div>
       </SidebarProvider>
     </div>
   );
