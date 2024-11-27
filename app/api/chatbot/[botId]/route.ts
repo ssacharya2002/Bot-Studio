@@ -32,6 +32,23 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
         return new Response("Missing required fields", { status: 400 });
     }
 
+    const bot = await prisma.bot.findUnique({
+        where: {
+            id: params.botId,
+            userId: user.id,
+        },
+    });
+
+    if (!bot) {
+        return new Response("Bot not found", { status: 404 });
+    }
+
+    if (bot.pdfKey !== pdfKey) {
+
+        console.log("inside pdf key check");
+        
+       
+
     const filePath = `pdf/${pdfKey}.pdf`
 
     try {
@@ -155,7 +172,9 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
     }
 
 
-    const bot = await prisma.bot.update({
+}
+
+    const updatedBot = await prisma.bot.update({
         where: {
             id: params.botId,
         },
@@ -169,7 +188,7 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
     });
 
 
-    return new Response(JSON.stringify(bot));
+    return new Response(JSON.stringify(updatedBot));
 
 
 }
