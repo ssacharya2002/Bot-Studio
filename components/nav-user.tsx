@@ -26,6 +26,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useClerk } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export function NavUser({
   user,
@@ -38,6 +39,8 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
   const { signOut } = useClerk();
+
+  const router = useRouter();
 
   return (
     <SidebarMenu>
@@ -103,6 +106,8 @@ export function NavUser({
             <DropdownMenuItem
               onClick={ () => {
                  signOut({ redirectUrl: "/" });
+                 router.refresh();
+                 
               }}
             >
               <LogOut />
