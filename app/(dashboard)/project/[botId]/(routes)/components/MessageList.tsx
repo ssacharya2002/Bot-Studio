@@ -1,9 +1,7 @@
 "use client";
 
-import React, {  useEffect, useRef } from "react";
-
+import React, { useEffect, useRef } from "react";
 import { BeatLoader } from "react-spinners";
-
 
 // Message type definition
 type Message = {
@@ -12,11 +10,13 @@ type Message = {
   role: "user" | "assistant";
 };
 
+interface MessageListProps {
+  messages: Message[];
+  isLoading: boolean;
+}
+
 // MessageList component
-const MessageList: React.FC<{ messages: Message[]; isLoading: boolean }> = ({
-  messages,
-  isLoading,
-}) => {
+const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Scroll to bottom whenever messages change
@@ -26,7 +26,7 @@ const MessageList: React.FC<{ messages: Message[]; isLoading: boolean }> = ({
 
   return (
     <div className="p-4 space-y-4">
-      {messages.map((message, index) => (
+      {messages.map((message) => (
         <div
           key={message.id}
           className={`flex ${
@@ -36,9 +36,9 @@ const MessageList: React.FC<{ messages: Message[]; isLoading: boolean }> = ({
           <div
             className={`max-w-[70%] p-3 rounded-lg ${
               message.role === "user"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-black"
-            }`}
+                ? "bg-purple-600 text-white"
+                : "bg-purple-50 text-gray-800"
+            } shadow-sm`}
           >
             {message.content}
           </div>
@@ -46,8 +46,11 @@ const MessageList: React.FC<{ messages: Message[]; isLoading: boolean }> = ({
       ))}
       {isLoading && (
         <div className="flex justify-start">
-          <div className="max-w-[70%] p-3 rounded-lg bg-gray-200 text-black flex justify-center items-center">
-          Loading<BeatLoader size={5}  />
+          <div className="max-w-[70%] p-3 rounded-lg bg-purple-50 text-gray-800 shadow-sm ">
+          <div className="flex items-center gap-2">
+              <span>Thinking</span>
+              <BeatLoader size={5} color="#9333ea" />
+            </div>
           </div>
         </div>
       )}
