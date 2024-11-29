@@ -1,7 +1,13 @@
+import Navbar from "./components/Navbar";
 import Home from "./landingpage";
 
 function page() {
-  return <Home />;
+  return (
+    <div>
+      <Navbar />
+      <Home />
+    </div>
+  );
 }
 
 export default page;

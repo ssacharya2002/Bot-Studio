@@ -1,17 +1,16 @@
 "use client";
 
-
-import { Bot, Zap, MessageSquare } from "lucide-react";
+import { Bot, Zap, MessageSquare, Shield, CheckCircle } from "lucide-react";
 import PricingCard from "./components/PricingCard";
 import FeatureCard from "./components/FeatureCard";
 import Hero from "./components/Hero";
 import Steps from "./components/Steps";
 import Footer from "./components/Footer";
-import "./components/styles/style.css";
+
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
+    <div className="min-h-screen bg-gradient-to-b from-home-background to-home-secondary">
       <main>
         <Hero />
         
@@ -22,17 +21,17 @@ export default function Home() {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard
-              icon={<Bot className="w-8 h-8 text-primary" />}
+              icon={<Bot className="w-8 h-8 text-home-primary" />}
               title="Easy Setup"
               description="Upload your PDFs and FAQs to create a custom chatbot in minutes"
             />
             <FeatureCard
-              icon={<Zap className="w-8 h-8 text-primary" />}
+              icon={<Zap className="w-8 h-8 text-home-primary" />}
               title="Intelligent Responses"
               description="Powered by OpenAI and LangChain for accurate, context-aware answers"
             />
             <FeatureCard
-              icon={<MessageSquare className="w-8 h-8 text-primary" />}
+              icon={<MessageSquare className="w-8 h-8 text-home-primary" />}
               title="Seamless Integration"
               description="Simple script tag to embed the chatbot on any website"
             />

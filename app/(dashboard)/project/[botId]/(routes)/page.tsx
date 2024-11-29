@@ -1,21 +1,19 @@
-import Navbar from "@/components/Navbar";
 import prisma from "@/lib/prisma";
 import { GetPdfUrl } from "@/lib/s3";
-import { RedirectToSignIn } from "@clerk/nextjs";
+// import { RedirectToSignIn } from "@clerk/nextjs/";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
 import PDFViewer from "./components/pdf-viewer";
 import ChatComponent from "./components/ChatComponent";
-import { Chat } from "./components/chat-component";
-
 async function page({ params }: { params: Promise<{ botId: string }> }) {
   const { botId } = await params;
 
   const { userId } = await auth();
 
   if (!userId) {
-    return RedirectToSignIn({});
+    // return RedirectToSignIn({});
+    redirect("/sign-in");
   }
 
   const bot = await prisma.bot.findUnique({
@@ -32,15 +30,17 @@ async function page({ params }: { params: Promise<{ botId: string }> }) {
   const pdfUrl = GetPdfUrl(bot.pdfKey);
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <Navbar />
-      <div className="flex flex-1">
-
-      <div className=" grid grid-cols-2 flex-row flex-1  h-[calc(100vh-80px)]">
-        <PDFViewer pdf_url={pdfUrl} />
-        <ChatComponent botId={botId} bot={bot} />
-        {/* <Chat /> */}
-      </div>
+    <div className="w-full h-full bg-gradient-to-br from-purple-50 to-purple-50">
+      <div className="flex flex-row h-[calc(100vh-80px)]">
+        <div
+          className="basis-3/5 flex-shrink-0 hidden
+    sm:flex"
+        >
+          <PDFViewer pdf_url={pdfUrl} />
+        </div>
+        <div className="basis-2/5 flex-grow">
+          <ChatComponent botId={botId} bot={bot} />
+        </div>
       </div>
     </div>
   );

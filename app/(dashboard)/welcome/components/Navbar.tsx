@@ -25,7 +25,8 @@ export default function Navbar() {
         </div>
           </Link>
 
-        {/* Navigation */}
+        <div className="flex gap-2">
+          {/* Navigation */}
         <nav className="hidden md:flex items-center gap-1">
           <NavLink href="/pricing">Pricing</NavLink>
           <NavLink href="/docs">Documentation</NavLink>
@@ -46,6 +47,7 @@ export default function Navbar() {
           {/* <Button className="premium-gradient hover:opacity-90 transition-opacity">
             Get Started
           </Button>  */}
+        </div>
         </div>
       </div>
     </header>

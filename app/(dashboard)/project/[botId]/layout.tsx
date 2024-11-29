@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import prisma from "@/lib/prisma";
 // import prisma from "@/lib/prisma";
@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
+import Navbar from "../../welcome/components/Navbar";
 
 export default async function Layout({
   children,
@@ -42,7 +43,7 @@ export default async function Layout({
   }
 
   return (
-    <div>
+    <div className="">
       <SidebarProvider>
         <AppSidebar
           bot={bot}
@@ -53,13 +54,8 @@ export default async function Layout({
           }}
         />
         <SidebarTrigger />
-        <div className="flex flex-col w-full">
-          <Navbar
-            user={{
-              image: user.imageUrl,
-              name: user?.fullName || "",
-            }}
-          />
+        <div className="flex flex-col w-full overflow-hidden">
+          <Navbar />
           {children}
         </div>
       </SidebarProvider>

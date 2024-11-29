@@ -53,27 +53,27 @@ export default function TimelineStep({ number, title, description, icon, isLast 
         <motion.div
           className={cn(
             "w-6 h-6 rounded-full flex items-center justify-center",
-            "bg-background border-[3px] border-primary shadow-[0_0_0_4px_hsl(var(--background))]",
+            "bg-home-background border-[3px] border-home-primary shadow-[0_0_0_4px_hsl(var(--home-background))]",
             "relative z-10"
           )}
         >
-          <div className="w-2 h-2 rounded-full bg-primary" />
+          <div className="w-2 h-2 rounded-full bg-home-primary" />
         </motion.div>
       </div>
 
       {/* Content */}
       <div className="space-y-2">
         <div className="flex flex-col">
-          <span className="text-sm font-medium text-muted-foreground mb-1">
+          <span className="text-sm font-medium text-home-muted-foreground mb-1">
             Step {number}
           </span>
           <h3 className="text-xl font-semibold">{title}</h3>
         </div>
         <div className="flex gap-3 items-start">
-          <div className="p-2 rounded-lg bg-primary/10 backdrop-blur-sm">
+          <div className="p-2 rounded-lg bg-home-primary/10 backdrop-blur-sm">
             {icon}
           </div>
-          <p className="text-muted-foreground pt-1">{description}</p>
+          <p className="text-home-muted-foreground pt-1">{description}</p>
         </div>
       </div>
     </motion.div>

@@ -41,6 +41,27 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --home-background: 240 25% 98%;
+    --home-foreground: 240 10% 3.9%;
+    --home-card: 0 0% 100%;
+    --home-card-foreground: 240 10% 3.9%;
+    --home-popover: 0 0% 100%;
+    --home-popover-foreground: 240 10% 3.9%;
+    --home-primary: 250 95% 60%;
+    --home-primary-foreground: 0 0% 98%;
+    --home-secondary: 240 5% 96%;
+    --home-secondary-foreground: 240 6% 10%;
+    --home-muted: 240 5% 96%;
+    --home-muted-foreground: 240 4% 46%;
+    --home-accent: 250 95% 60%;
+    --home-accent-foreground: 240 6% 10%;
+    --home-destructive: 0 84.2% 60.2%;
+    --home-destructive-foreground: 0 0% 98%;
+    --home-border: 240 6% 90%;
+    --home-input: 240 6% 90%;
+    --home-ring: 250 95% 60%;
+    --home-radius: 0.75rem;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -75,6 +96,26 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --home-background: 240 10% 3.9%;
+    --home-foreground: 0 0% 98%;
+    --home-card: 240 10% 3.9%;
+    --home-card-foreground: 0 0% 98%;
+    --home-popover: 240 10% 3.9%;
+    --home-popover-foreground: 0 0% 98%;
+    --home-primary: 250 95% 65%;
+    --home-primary-foreground: 240 6% 10%;
+    --home-secondary: 240 4% 8%;
+    --home-secondary-foreground: 0 0% 98%;
+    --home-muted: 240 4% 8%;
+    --home-muted-foreground: 240 5% 64.9%;
+    --home-accent: 250 95% 65%;
+    --home-accent-foreground: 0 0% 98%;
+    --home-destructive: 0 62.8% 30.6%;
+    --home-destructive-foreground: 0 0% 98%;
+    --home-border: 240 4% 16%;
+    --home-input: 240 4% 16%;
+    --home-ring: 250 95% 65%;
   }
 }
 
@@ -85,4 +126,25 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+
+.premium-gradient {
+  background: linear-gradient(135deg, 
+    hsl(var(--home-primary)) 0%,
+    hsl(265 95% 60%) 50%,
+    hsl(280 95% 60%) 100%
+  );
+}
+
+.text-gradient {
+  background: linear-gradient(135deg,
+    hsl(var(--home-primary)) 0%,
+    hsl(265 95% 60%) 50%,
+    hsl(280 95% 60%) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

@@ -36,7 +36,7 @@ export default function Steps() {
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">Create Your Chatbot in Minutes</h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-home-muted-foreground">
             Follow these simple steps to set up your AI-powered chatbot and start engaging with your visitors.
           </p>
         </div>

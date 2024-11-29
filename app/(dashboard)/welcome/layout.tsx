@@ -1,5 +1,5 @@
 // import LandingPage from "./landingpage";
-import Navbar from "@/app/(dashboard)/welcome/components/Navbar";
+// import Navbar from "@/app/(dashboard)/welcome/components/Navbar";
 
 
 export default async function SetupLayout({
@@ -11,7 +11,7 @@ export default async function SetupLayout({
  
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       {children}
     </>
   );
