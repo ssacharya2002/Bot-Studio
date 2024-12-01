@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma";
 import { answerChainForInApp, standaloneQuestionChain } from "@/lib/promptService";
 import { RedisClient } from "@/lib/redis";
 import { matchDocumentEmbeddings } from "@/lib/supabaseFuntions";
-import { Message } from "ai/react";
 import { NextRequest, NextResponse } from "next/server";
 
 
