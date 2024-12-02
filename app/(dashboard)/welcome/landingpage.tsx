@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, Zap, MessageSquare, Shield, CheckCircle } from "lucide-react";
+import { Bot, Zap, MessageSquare } from "lucide-react";
 import PricingCard from "./components/PricingCard";
 import FeatureCard from "./components/FeatureCard";
 import Hero from "./components/Hero";

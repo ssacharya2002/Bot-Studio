@@ -19,6 +19,12 @@ export async function OPTIONS() {
     return NextResponse.json({}, { headers: corsHeaders });
 }
 
+interface Message {
+    id: string;
+    content: string;
+    role: "user" | "assistant";
+}
+
 // Handle POST requests
 export async function POST(req: NextRequest, { params }: { params: Promise<{ botId: string }> }) {
     const botId = (await params).botId;
@@ -94,10 +100,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ bot
         const queryEmbedding = await generateEmbeddingVector(standalone_qs);
 
         // Match documents based on embeddings
-        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, {}, pdfuuid);
+        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, "", pdfuuid);
 
         const context = contextDocuments?.length
-            ? contextDocuments.map((doc) => doc?.content).join("\n\n")
+            ? contextDocuments.map((doc:{ content: string }) => doc?.content).join("\n\n")
             : "";
 
         // Generate answer from the chain

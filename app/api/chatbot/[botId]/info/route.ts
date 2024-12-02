@@ -15,10 +15,10 @@ export async function OPTIONS() {
 
 export async function GET(
     req: Request,
-    { params }: { params: { botId: Promise<string> } }
+    { params }: { params: Promise<{ botId: string }> } 
 ): Promise<Response> {
 
-    const botId = await params.botId
+    const botId = (await params).botId
 
     try {
         // Validate botId

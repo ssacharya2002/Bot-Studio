@@ -14,7 +14,8 @@ const NewOrEdit = async({params}:{params: Promise<{ botId: string }>}) => {
    return RedirectToSignIn({});
   }
 
-  const { botId } = await params;
+  // const { botId } = await params;
+  const botId = (await params).botId;
 
   const initialData = await prisma.bot.findMany({
     where: {

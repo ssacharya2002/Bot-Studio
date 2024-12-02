@@ -4,8 +4,8 @@ import { ApiAlert } from "@/components/ui/api-alert";
 
 // import React from 'react'
 
-const page = ({ params }: { params: { botId: string } }) => {
-  const AppId = params.botId;
+const page = async ({ params }: { params: Promise<{ botId: string }> }) => {
+  const AppId = (await params).botId;
   const scriptTag = `<script appid="${AppId}" src="https://res.cloudinary.com/dt43piwsk/raw/upload/v1732638657/wcfetvgnoewhhw4ehqgi.js"></script>`;
 
   return (

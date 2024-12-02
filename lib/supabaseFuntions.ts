@@ -11,7 +11,7 @@ export const deleteDocumentsByPdfUuid = async (
     pdfUuid: string
 ): Promise<DeleteDocumentsResult> => {
     try {
-        const { data, error } = await SupabaseClient.rpc('delete_document_embeddings', {
+        const {  error } = await SupabaseClient.rpc('delete_document_embeddings', {
             pdf_uuid: pdfUuid,
         });
 
@@ -25,6 +25,11 @@ export const deleteDocumentsByPdfUuid = async (
         };
     } catch (error) {
         console.error('Error deleting document embeddings:', error);
+
+        return {
+            success: false,
+            message: 'Failed to delete document embeddings.',
+        }
         // throw new Error('Failed to delete document embeddings');
     }
 }
@@ -43,6 +48,7 @@ export async function matchDocumentEmbeddings(queryEmbedding: number[], matchCou
     if(!data) return []
     return data;
   } catch (error) {
+    console.error('Error matching document embeddings:', error);
     throw new Error('Failed to match document embeddings');
   }
 }

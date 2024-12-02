@@ -10,6 +10,8 @@ export async function generateEmbeddingVector(text:string) {
     const vector = await embeddings.embedQuery(text);
     return vector;
   } catch (error) {
-    throw new Error('Failed to generate embedding vector',);
+    console.log(error);
+    throw new Error('Failed to generate embedding vector');
+    
   }
 }

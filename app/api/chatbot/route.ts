@@ -5,7 +5,7 @@ import path from "path";
 import fs from 'fs';
 
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { createClient } from '@supabase/supabase-js';
 import { OpenAIEmbeddings } from '@langchain/openai';
 
@@ -117,14 +117,24 @@ export async function POST(req: Request) {
         // Create OpenAIEmbeddings instance once
         const openAIEmbeddingInstance = new OpenAIEmbeddings({ openAIApiKey });
 
+        interface Metadata {
+            loc: {
+              lines: {
+                to: number;
+                from: number;
+              };
+            };
+          }
+
         interface Doc {
             pageContent: string;
-            metadata?: any; // Add this line
+            metadata?: Metadata; // Add this line
         }
 
 
         // Generate embeddings and prepare data for insertion
         const embeddings = await Promise.all(
+            // @ts-expect-error TS2339
             documents.map(async (doc: Doc) => {
                 const embedding = await openAIEmbeddingInstance.embedDocuments([doc.pageContent]);
                 return {
@@ -140,7 +150,7 @@ export async function POST(req: Request) {
         const client = createClient(sbUrl, sbApiKey);
 
         // Insert embeddings into Supabase table
-        const { data, error } = await client
+        const { error } = await client
             .from("document_embeddings")
             .insert(embeddings);
 

@@ -5,16 +5,17 @@ import path from "path";
 import fs from 'fs';
 
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { deleteDocumentsByPdfUuid } from "@/lib/supabaseFuntions";
 import SupabaseClient from "@/lib/supabase";
 
 
-export async function PATCH(req: Request, { params }: { params: { botId: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ botId: string }> }) {
 
 
     const user = await currentUser();
+    const botId = (await params).botId
 
     if (!user) {
         return new Response("Unauthorized", { status: 401 });
@@ -34,7 +35,7 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
 
     const bot = await prisma.bot.findUnique({
         where: {
-            id: params.botId,
+            id: botId,
             userId: user.id,
         },
     });
@@ -124,15 +125,26 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
         // Create OpenAIEmbeddings instance once
         const openAIEmbeddingInstance = new OpenAIEmbeddings({ openAIApiKey });
 
-        interface Doc {
-            pageContent: string;
-            metadata?: any; // Add this line
-        }
+        // interface Metadata {
+        //     loc: {
+        //       lines: {
+        //         to: number;
+        //         from: number;
+        //       };
+        //     };
+        //   }
+
+        // interface Doc {
+        //     pageContent: string;
+        //     metadata?: Metadata; // Add this line
+        // }
+
+        
 
 
         // Generate embeddings and prepare data for insertion
         const embeddings = await Promise.all(
-            documents.map(async (doc: Doc) => {
+            documents.map(async (doc) => {
                 const embedding = await openAIEmbeddingInstance.embedDocuments([doc.pageContent]);
                 return {
                     uuid,
@@ -146,7 +158,7 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
 
 
         // Insert embeddings into Supabase table
-        const { data, error } = await SupabaseClient
+        const { error } = await SupabaseClient
             .from("document_embeddings")
             .insert(embeddings);
 
@@ -176,7 +188,7 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
 
     const updatedBot = await prisma.bot.update({
         where: {
-            id: params.botId,
+            id: botId
         },
         data: {
             name,
@@ -194,10 +206,11 @@ export async function PATCH(req: Request, { params }: { params: { botId: string 
 }
 
 
-export async function DELETE(req: Request, { params }: { params: { botId: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ botId: string }> }) {
 
 
     const user = await currentUser();
+    const botId = (await params).botId
 
     if (!user) {
         return new Response("Unauthorized", { status: 401 });
@@ -208,7 +221,7 @@ export async function DELETE(req: Request, { params }: { params: { botId: string
 
     const bot = await prisma.bot.delete({
         where: {
-            id: params.botId,
+            id: botId,
             userId
         },
     }

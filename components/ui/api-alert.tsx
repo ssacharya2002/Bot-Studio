@@ -1,8 +1,7 @@
 "use client";
-import { Code2, Copy, Server } from "lucide-react";
+import { Code2, Copy } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge, BadgeProps } from "@/components/ui/badge";
 import { Button } from "./button";
 import { toast } from "sonner";
 
@@ -33,7 +32,7 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
         <h3 className="text-2xl font-semibold">Integration Guide</h3>
         <ol className="list-decimal list-inside text-gray-700 space-y-3">
           <li>Copy the provided script tag</li>
-          <li>Paste in your website's HTML &lt;head&gt; section</li>
+          <li>Paste in your website&apos;s HTML &lt;head&gt; section</li>
         </ol>
       </div>
 

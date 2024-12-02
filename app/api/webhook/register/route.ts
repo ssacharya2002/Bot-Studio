@@ -17,9 +17,11 @@ export async function POST(req: Request) {
     }
 
     const headerPayload = headers();
-
+    // @ts-expect-error Svix_error
     const svix_id = headerPayload.get("svix-id");
+    // @ts-expect-error Svix_error
     const svix_timestamp = headerPayload.get("svix-timestamp");
+    // @ts-expect-error Svix_error
     const svix_signature = headerPayload.get("svix-signature");
 
 

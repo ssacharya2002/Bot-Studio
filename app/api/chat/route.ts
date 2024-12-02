@@ -100,10 +100,10 @@ export async function POST(req: NextRequest) {
         const queryEmbedding = await generateEmbeddingVector(standalone_qs);
 
         // Match documents based on embeddings
-        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, {}, pdfuuid);
+        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, "", pdfuuid);
 
         const context = contextDocuments?.length
-            ? contextDocuments.map((doc:any) => doc?.content).join("\n\n")
+            ? contextDocuments.map((doc:{ content: string }) => doc?.content).join("\n\n")
             : "";
 
         // Generate answer from the chain

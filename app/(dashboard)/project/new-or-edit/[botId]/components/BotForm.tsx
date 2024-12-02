@@ -83,6 +83,9 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
       }
     } catch (err) {
       toast.error("something went wrong");
+      console.log(err);
+    } finally {
+      setToastLoading(false);
     }
   };
 

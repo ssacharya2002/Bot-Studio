@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 
-export async function GET(req: Request, { params }: { params: { botId: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ botId: string }> }) {
 
 
     console.log("hello from toggleactivate");
@@ -9,6 +9,7 @@ export async function GET(req: Request, { params }: { params: { botId: string } 
 
 
     const user = await currentUser();
+    const botId = (await params).botId
 
     if (!user) {
         return new Response("Unauthorized", { status: 401 });
@@ -18,7 +19,7 @@ export async function GET(req: Request, { params }: { params: { botId: string } 
 
     const bot = await prisma.bot.findUnique({
         where: {
-            id: params.botId,
+            id: botId,
             userId
         }
     })
@@ -33,7 +34,7 @@ export async function GET(req: Request, { params }: { params: { botId: string } 
 
     const updatedBot = await prisma.bot.update({
         where: {
-            id: params.botId,
+            id: botId,
             userId
         },
         data: {

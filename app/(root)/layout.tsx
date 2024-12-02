@@ -8,7 +8,6 @@ export default async function SetupLayout({
   children,
 }: {
   children: React.ReactNode;
-  params: { botId: string };
 }) {
   const { userId } = await auth();
 

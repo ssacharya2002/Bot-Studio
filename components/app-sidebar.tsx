@@ -2,12 +2,12 @@
 
 import * as React from "react";
 import {
-  AudioWaveform,
+  // AudioWaveform,
   BookOpen,
   // Bot,
-  Command,
+  // Command,
   // Frame,
-  GalleryVerticalEnd,
+  // GalleryVerticalEnd,
   // Map,
   // PieChart,
   Settings2,
@@ -25,34 +25,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useUser } from "@clerk/nextjs";
 import { bot } from "@prisma/client";
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-};
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   bot: bot | null;
@@ -65,13 +39,13 @@ export function AppSidebar({ user, bot, ...props }: AppSidebarProps) {
   //   return null;
   // }
 
-  const userData = {
-    // name: user.firstName + " " + user.lastName,
-    name: user.name,
-    // email: user.emailAddresses[0].emailAddress,
-    email: user.email,
-    avatar: user.avatar,
-  };
+  // const userData = {
+  //   // name: user.firstName + " " + user.lastName,
+  //   name: user.name,
+  //   // email: user.emailAddresses[0].emailAddress,
+  //   email: user.email,
+  //   avatar: user.avatar,
+  // };
 
   const navMain = [
     {
@@ -151,7 +125,7 @@ export function AppSidebar({ user, bot, ...props }: AppSidebarProps) {
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={userData} />
+      <NavUser user={{ name: user.name!, email: user.email!, avatar: user.avatar }} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

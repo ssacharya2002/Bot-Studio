@@ -18,14 +18,14 @@ export async function OPTIONS() {
 }
 
 // Handle POST requests
-export async function POST(req: NextRequest, { params }: { params: { botId: string } }) {
-    const botId = params.botId;
+export async function POST(req: NextRequest, { params }: { params: Promise<{ botId: string }> }) {
+    const botId = (await params).botId
 
    
     try {
         // Parse the JSON body
         const body = await req.json();
-        const { question, conv_history = "", uuid } = body;
+        const { question, conv_history = "" } = body;
 
         console.log("Request Body:", body);
 
@@ -84,10 +84,10 @@ export async function POST(req: NextRequest, { params }: { params: { botId: stri
         const queryEmbedding = await generateEmbeddingVector(standalone_qs);
 
         // Match documents based on embeddings
-        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, {}, pdfuuid);
+        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, "", pdfuuid);
 
         const context = contextDocuments?.length
-            ? contextDocuments.map((doc) => doc?.content).join("\n\n")
+            ? contextDocuments.map((doc:{ content: string }) => doc?.content).join("\n\n")
             : "";
 
         // Generate answer from the chain

@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatDistanceToNow } from "date-fns";
 import { bot } from "@prisma/client";
-import { GetPdfUrl } from "@/lib/s3";
 import Link from "next/link";
 
 interface BotCardProps {

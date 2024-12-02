@@ -7,7 +7,9 @@ import React from "react";
 import PDFViewer from "./components/pdf-viewer";
 import ChatComponent from "./components/ChatComponent";
 async function page({ params }: { params: Promise<{ botId: string }> }) {
-  const { botId } = await params;
+  // const { botId } = await params;
+
+  const botId = (await params).botId;
 
   const { userId } = await auth();
 
