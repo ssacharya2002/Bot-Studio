@@ -8,6 +8,20 @@ import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { createClient } from '@supabase/supabase-js';
 import { OpenAIEmbeddings } from '@langchain/openai';
+import { NextResponse } from "next/server";
+
+
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+// Handle OPTIONS requests for CORS preflight
+export async function OPTIONS() {
+    return NextResponse.json({}, { headers: corsHeaders });
+}
+
 
 export async function POST(req: Request) {
 
@@ -186,6 +200,12 @@ export async function POST(req: Request) {
         },
     })
 
-    return new Response(JSON.stringify(bot));
+    return new Response(JSON.stringify(bot),{
+        status: 200,
+        headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders // Spread the CORS headers
+        },
+    });
 
 }
