@@ -100,7 +100,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ bot
         const queryEmbedding = await generateEmbeddingVector(standalone_qs);
 
         // Match documents based on embeddings
-        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, "", pdfuuid);
+        //@ts-expect-error Error
+        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, {}, pdfuuid);
 
         const context = contextDocuments?.length
             ? contextDocuments.map((doc:{ content: string }) => doc?.content).join("\n\n")
@@ -112,7 +113,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ bot
             conv_history,
             question,
             contactEmail: bot.email,
-            contactLink: `http://localhost:3000/contact/${botId}`,
+            contactLink: `${process.env.HOST}/contact/${botId}`,
             botName: bot.name
         });
 
@@ -228,7 +229,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ bot
 //             conv_history,
 //             question,
 //             contactEmail: bot.email,
-//             contactLink: `http://localhost:3000/contact/${botId}`,
+//             contactLink: `process.env.HOST/contact/${botId}`,
 //         });
 
 //         // Format response for AI SDK

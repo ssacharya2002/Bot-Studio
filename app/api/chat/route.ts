@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
             conv_history,
             question,
             contactEmail: bot.email,
-            contactLink: `http://localhost:3000/contact/${botId}`,
+            contactLink: `${process.env.HOST}/contact/${botId}`,
             botName: bot.name,
         });
 
@@ -236,7 +236,7 @@ export async function POST(req: NextRequest) {
 //             conv_history,
 //             question,
 //             contactEmail: bot.email,
-//             contactLink: `http://localhost:3000/contact/${botId}`,
+//             contactLink: `process.env.HOST/contact/${botId}`,
 //         });
 
 //         // Format response for AI SDK
