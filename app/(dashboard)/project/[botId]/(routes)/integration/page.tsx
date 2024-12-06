@@ -6,7 +6,7 @@ import { ApiAlert } from "@/components/ui/api-alert";
 
 const page = async ({ params }: { params: Promise<{ botId: string }> }) => {
   const AppId = (await params).botId;
-  const scriptTag = `<script appid="${AppId}" src="https://res.cloudinary.com/dt43piwsk/raw/upload/v1732638657/wcfetvgnoewhhw4ehqgi.js"></script>`;
+  const scriptTag = `<script appid="${AppId}" src=${process.env.CHATBOT_INTEGRATION_SCRIPT}></script>`;
 
   return (
     <div className="p-4 md:p-10">
