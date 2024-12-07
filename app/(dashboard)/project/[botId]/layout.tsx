@@ -53,9 +53,10 @@ export default async function Layout({
             avatar: user.imageUrl,
           }}
         />
-        <SidebarTrigger />
+       
         <div className="flex flex-col w-full overflow-hidden">
-          <Navbar />
+        {/* <SidebarTrigger /> */}
+          <Navbar SidebarTrigger={<SidebarTrigger />} />
           {children}
         </div>
       </SidebarProvider>
