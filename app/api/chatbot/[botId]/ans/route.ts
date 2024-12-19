@@ -84,7 +84,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ bot
         const queryEmbedding = await generateEmbeddingVector(standalone_qs);
 
         // Match documents based on embeddings
-        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, "", pdfuuid);
+        //@ts-expect-error Error
+        const contextDocuments = await matchDocumentEmbeddings(queryEmbedding, 5, {}, pdfuuid);
 
         const context = contextDocuments?.length
             ? contextDocuments.map((doc:{ content: string }) => doc?.content).join("\n\n")
