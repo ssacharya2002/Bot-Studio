@@ -23,6 +23,7 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Wand2 } from "lucide-react";
 import { useState } from "react";
+import AvatarUpload from "./avatar-upload";
 
 interface BotFormProps {
   initialData: bot | null;
@@ -49,10 +50,6 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
     },
   });
 
-  console.log("initialData", initialData);
-
-  console.log("botId", botId);
-
   const isLoading = form.formState.isSubmitting;
   const router = useRouter();
 
@@ -78,7 +75,7 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
         const data = await axios.post(`/api/chatbot`, values);
         setToastLoading(false);
         toast("Successfully created");
-        const botId  = data.data.id;
+        const botId = data.data.id;
         router.push(`/project/${botId}`);
       }
     } catch (err) {
@@ -90,13 +87,14 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
   };
 
   return (
-    <div className="h-full  p-4 space-y-2  mx-10">
+    <div className="h-full p-4 space-y-2 mx-10">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 pb-10"
+          className="space-y-8 pb-10 flex flex-col md:flex-row md:space-x-8 md:space-y-0 w-full justify-center md:gap-40 items-center md:pt-10 md:pb-20 md:px-10"
         >
           {/* file upload */}
+          <div className="flex flex-col items-center justify-center gap-2">
 
           <FormField
             name="pdfKey"
@@ -107,18 +105,49 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
                     disabled={isLoading}
                     onChange={(e: string) => field.onChange(e)}
                     pdfKey={field.value}
-                  />
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
-          />
+            />
+            <p className="text-sm text-muted-foreground whitespace-nowrap ">Upload PDF for Chatbot Responses</p>
+            </div>
 
-          {/* file upload-- end  */}
+          <div className="grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-1 w-full">
+          <div className="col-span-2 md:col-span-1 flex items-center w-full gap-4">
+              <FormField
+                name="avatar"
+                render={({ field }) => (
+                  <FormItem className="flex-grow-0">
+                    <FormControl>
+                      <AvatarUpload
+                        disabled={isLoading}
+                        onChange={(e) => field.onChange(e)}
+                        avatarUrl={field.value}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div className="grid grid-cols-2 gap-2 ">
-            {/* {name} */}
-
+              <FormField
+                name="active"
+                render={({ field }) => (
+                  <FormItem className="flex items-center gap-2 ml-auto">
+                    <FormLabel className="text-red-600">Active</FormLabel>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               name="name"
               control={form.control}
@@ -138,8 +167,6 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
               )}
             />
 
-            {/* {name} end */}
-
             <FormField
               name="email"
               control={form.control}
@@ -158,56 +185,16 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
                 </FormItem>
               )}
             />
-          </div>
 
-          {/* {avatar} */}
-          <FormField
-            name="avatar"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem className="col-span-2 md:col-span-1">
-                <FormLabel>avatar</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isLoading}
-                    placeholder="avatar url"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>this is your bot logo</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* {avatar} end */}
-
-          <FormField
-            name="active"
-            render={({ field }) => (
-              <FormItem className="flex  items-center justify-center gap-2">
-                <FormLabel className="text-red-600">Active</FormLabel>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="w-full flex justify-center">
-            <Button
-              disabled={isLoading}
-              size="lg"
-              // className="bg-gradient-to-r from-green-500   to-blue-500"
-            >
-              {initialData ? "Edit your Bot" : "Create your Bot"}
-              <Wand2 className="w-4 h-4 ml-2" />
-            </Button>
+            
           </div>
         </form>
+        <div className="w-full flex justify-center">
+          <Button disabled={isLoading} size="lg">
+            {initialData ? "Edit your Bot" : "Create your Bot"}
+            <Wand2 className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
       </Form>
     </div>
   );
