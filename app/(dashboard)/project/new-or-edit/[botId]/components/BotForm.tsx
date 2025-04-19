@@ -90,32 +90,32 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
     <div className="h-full p-4 space-y-2 mx-10">
       <Form {...form}>
         <form
+          id="botForm"
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 pb-10 flex flex-col md:flex-row md:space-x-8 md:space-y-0 w-full justify-center md:gap-40 items-center md:pt-10 md:pb-20 md:px-10"
         >
           {/* file upload */}
           <div className="flex flex-col items-center justify-center gap-2">
-
-          <FormField
-            name="pdfKey"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-center justify-center space-y-4">
-                <FormControl>
-                  <FileUpload
-                    disabled={isLoading}
-                    onChange={(e: string) => field.onChange(e)}
-                    pdfKey={field.value}
+            <FormField
+              name="pdfKey"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-center justify-center space-y-4">
+                  <FormControl>
+                    <FileUpload
+                      disabled={isLoading}
+                      onChange={(e: string) => field.onChange(e)}
+                      pdfKey={field.value}
                     />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <p className="text-sm text-muted-foreground whitespace-nowrap ">Upload PDF for Chatbot Responses</p>
-            </div>
+          </div>
 
           <div className="grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-1 w-full">
-          <div className="col-span-2 md:col-span-1 flex items-center w-full gap-4">
+            <div className="col-span-2 md:col-span-1 flex items-center w-full gap-4">
               <FormField
                 name="avatar"
                 render={({ field }) => (
@@ -185,12 +185,16 @@ const BotForm = ({ initialData, botId }: BotFormProps) => {
                 </FormItem>
               )}
             />
-
-            
           </div>
         </form>
+        
         <div className="w-full flex justify-center">
-          <Button disabled={isLoading} size="lg">
+          <Button 
+            disabled={isLoading} 
+            size="lg" 
+            type="submit" 
+            form="botForm"
+          >
             {initialData ? "Edit your Bot" : "Create your Bot"}
             <Wand2 className="w-4 h-4 ml-2" />
           </Button>
